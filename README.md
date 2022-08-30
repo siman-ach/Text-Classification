@@ -21,6 +21,19 @@ Finetuning the [Graphcore Hugging Face Optimum](https://github.com/huggingface/o
 ## requirements.txt
 
  **A list of all of a project's dependencies**. This includes the dependencies needed by the dependencies. It also contains the specific version of each dependency.
+ 
+# Getting the dataset
+
+For this example I have focused on using my own dataset to use on the Graphcore Hugging Face Model
+
+To download the dataset example is very straightforward. 
+Simply git clone the dataset from Hugging Face Datasets:
+
+    git clone [https://huggingface.co/datasets/simana/textclassificationMNLI/](https://huggingface.co/datasets/simana/textclassificationMNLI/)
+
+After performing this git command, you should be able to see a folder called TextClassificationMNLI containing the `test.csv , train.csv ` and ` validation.csv`
+
+
 
 ## run_glue.py
 
@@ -45,18 +58,6 @@ GLUE is made up of a total of 9 different tasks. Here is how to run the script o
       --output_dir ./output/$TASK_NAME/
 
 where task name can be one of cola, sst2, mrpc, stsb, qqp, mnli, qnli, rte, wnli.
-
-# Getting the dataset
-
-For this example I have focused on using my own dataset to use on the Graphcore Hugging Face Model
-
-To download the dataset example is very straightforward. 
-Simply git clone the dataset from Hugging Face Datasets:
-
-    git clone [https://huggingface.co/datasets/simana/textclassificationMNLI/](https://huggingface.co/datasets/simana/textclassificationMNLI/)
-
-After performing this git command, you should be able to see a folder called TextClassificationMNLI containing the `test.csv , train.csv ` and ` validation.csv`
-
 
 
 ## Running the example 
