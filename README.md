@@ -20,79 +20,79 @@ limitations under the License.
 
 Based on the script [`run_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/pytorch/text-classification/run_glue.py).
 
-Fine-tuning the library models for sequence classification on the GLUE benchmark: [General Language Understanding
-Evaluation](https://gluebenchmark.com/). This script can fine-tune any of the models on the [hub](https://huggingface.co/models)
-and can also be used for a dataset hosted on our [hub](https://huggingface.co/datasets) or your own data in a csv or a JSON file
-(the script might need some tweaks in that case, refer to the comments inside for help).
+# NLP Text Classification Model
+
+Finetuning the [Graphcore Hugging Face Optimum](https://github.com/huggingface/optimum-graphcore) model to use on local datasets.
+
+## requirements.txt
+
+ **A list of all of a project's dependencies**. This includes the dependencies needed by the dependencies. It also contains the specific version of each dependency.
+
+## run_glue.py
+
+Main file with source code needed to run text classification model. Many attributes are provided in order to run this file and will be shown below.
+
+The model is also able to use the library models for sequence classification on the GLUE benchmark:  [General Language Understanding Evaluation](https://gluebenchmark.com/). This script can fine-tune any of the models on the  [hub](https://huggingface.co/models)  and can also be used for a dataset hosted on our  [hub](https://huggingface.co/datasets)  or your own data in a csv or a JSON file (the script might need some tweaks in that case, refer to the comments inside for help).
 
 GLUE is made up of a total of 9 different tasks. Here is how to run the script on one of them:
 
-```bash
-export TASK_NAME=sst2
-
-python run_glue.py \
-  --model_name_or_path bert-base-cased \
-  --ipu_config_name Graphcore/bert-base-ipu \
-  --task_name $TASK_NAME \
-  --do_train \
-  --do_eval \
-  --max_seq_length 128 \
-  --per_device_train_batch_size 8 \
-  --learning_rate 2e-5 \
-  --num_train_epochs 3 \
-  --output_dir ./output/$TASK_NAME/
-```
+    export TASK_NAME=sst2
+    
+    python run_glue.py \
+      --model_name_or_path bert-base-cased \
+      --ipu_config_name Graphcore/bert-base-ipu \
+      --task_name $TASK_NAME \
+      --do_train \
+      --do_eval \
+      --max_seq_length 128 \
+      --per_device_train_batch_size 8 \
+      --learning_rate 2e-5 \
+      --num_train_epochs 3 \
+      --output_dir ./output/$TASK_NAME/
 
 where task name can be one of cola, sst2, mrpc, stsb, qqp, mnli, qnli, rte, wnli.
 
-The following example fine-tunes BERT on the `imdb` dataset hosted on our [hub](https://huggingface.co/datasets):
+# Getting the dataset
 
-```bash
-python run_glue.py \
-  --model_name_or_path bert-base-cased \
-  --ipu_config_name Graphcore/bert-base-ipu \
-  --dataset_name imdb  \
-  --do_train \
-  --do_predict \
-  --max_seq_length 128 \
-  --per_device_train_batch_size 32 \
-  --pod_type pod16 \
-  --learning_rate 2e-5 \
-  --num_train_epochs 3 \
-  --output_dir ./output/imdb/
-```
+For this example I have focused on using my own dataset to use on the Graphcore Hugging Face Model
 
-## XNLI
+To download the dataset example is very straightforward. 
+Simply git clone the dataset from Hugging Face Datasets:
 
-Based on the script [`run_xnli.py`](https://github.com/huggingface/transformers/examples/pytorch/text-classification/run_xnli.py).
+    git clone [https://huggingface.co/datasets/simana/textclassificationMNLI/](https://huggingface.co/datasets/simana/textclassificationMNLI/)
 
-[XNLI](https://www.nyu.edu/projects/bowman/xnli/) is a crowd-sourced dataset based on [MultiNLI](http://www.nyu.edu/projects/bowman/multinli/). It is an evaluation benchmark for cross-lingual text representations. Pairs of text are labeled with textual entailment annotations for 15 different languages (including both high-resource language such as English and low-resource languages such as Swahili).
+After performing this git command, you should be able to see a folder called TextClassificationMNLI containing the `test.csv , train.csv ` and ` validation.csv`
 
-#### Fine-tuning on XNLI
 
-This example code fine-tunes mBERT (multi-lingual BERT) on the XNLI dataset.
 
-```bash
-python run_xnli.py \
-  --model_name_or_path bert-base-multilingual-cased \
-  --ipu_config_name Graphcore/bert-base-ipu \
-  --language de \
-  --train_language en \
-  --do_train \
-  --do_eval \
-  --per_device_train_batch_size 32 \
-  --pod_type pod16 \
-  --learning_rate 5e-5 \
-  --num_train_epochs 2.0 \
-  --max_seq_length 128 \
-  --output_dir ./output/xnli/ \
-  --save_steps -1
-```
+## Running the example 
 
-<!-- TODO: insert accuracy
-Training with the previously defined hyper-parameters yields the following results on the **test** set:
+Firstly you must make sure that you have installed Optimum.  You can do so using this command:
 
-```bash
-acc = 0.7093812375249501
-```
+    pip install optimum[graphcore]
+
+You must also ensure that you have downloaded the requirements.txt file to make sure that you are up to date with the necessary packages required to run the model:
+
+    pip install -r requirements.txt
+
+In order to run the model with the given example datasets, please follow the commands below:
+
+    export TASK_NAME=mnli
+    
+    python run_glue.py \
+    --model_name_or_path bert-base-uncased \
+    --ipu_config_name Graphcore/bert-base-ipu \
+    --train_file textclassificationMNLI/train.csv \
+    --test_file textclassificationMNLI/test.csv \
+    --validation_file textclassificationMNLI/validation.csv \
+    --do_train \
+    --do_predict \
+    --max_seq_length 128 \
+    --per_device_train_batch_size 32 \
+    --pod_type pod8 \
+    --learning_rate 2e-5 \
+    --num_train_epochs 3 \
+    --output_dir ./output/**classificationtest**/
+
+After the model has successfully complied you should be able to see the output results within the `output/classificationtest` folder.
 -->
