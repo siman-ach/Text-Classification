@@ -14,12 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Text classification examples
-
-## GLUE tasks
-
-Based on the script [`run_glue.py`](https://github.com/huggingface/transformers/blob/master/examples/pytorch/text-classification/run_glue.py).
-
 # NLP Text Classification Model
 
 Finetuning the [Graphcore Hugging Face Optimum](https://github.com/huggingface/optimum-graphcore) model to use on local datasets.
