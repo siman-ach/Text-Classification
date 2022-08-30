@@ -89,4 +89,3 @@ In order to run the model with the given example datasets, please follow the com
     --output_dir ./output/**classificationtest**/
 
 After the model has successfully complied you should be able to see the output results within the `output/classificationtest` folder.
--->
