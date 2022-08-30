@@ -50,10 +50,10 @@ from transformers.utils.versions import require_version
 
 
 # Will error if the minimal version of Transformers is not installed. Remove at your own risks.
-tf_check_min_version("4.18.0")
+#tf_check_min_version("4.18.0")
 
 # Will error if the minimal version of Optimum Graphcore is not installed. Remove at your own risks.
-check_min_version("0.2.4.dev")
+#check_min_version("0.2.4.dev")
 
 require_version("datasets>=1.8.0", "To fix: pip install -r examples/pytorch/text-classification/requirements.txt")
 
@@ -124,7 +124,7 @@ class DataTrainingArguments:
         },
     )
     max_predict_samples: Optional[int] = field(
-        default=None,
+        default=100,
         metadata={
             "help": "For debugging purposes or quicker training, truncate the number of prediction examples to this "
             "value if set."
@@ -430,7 +430,8 @@ def main():
 
         # Map labels to IDs (not necessary for GLUE tasks)
         
-        
+        print(label_to_id)
+        print(examples["label"])
         if label_to_id is not None and "label" in examples:
             result["label"] = [(label_to_id[l] if l != -1 else -1) for l in examples["label"]]
         return result
@@ -607,3 +608,5 @@ def _mp_fn(index):
 
 if __name__ == "__main__":
     main()
+
+
