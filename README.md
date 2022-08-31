@@ -29,7 +29,7 @@ For this example I have focused on using my own dataset to use on the Graphcore 
 To download the dataset example is very straightforward. 
 Simply git clone the dataset from Hugging Face Datasets:
 
-    git clone [https://huggingface.co/datasets/simana/textclassificationMNLI/](https://huggingface.co/datasets/simana/textclassificationMNLI/)
+    git clone https://huggingface.co/datasets/simana/textclassificationMNLI/
 
 After performing this git command, you should be able to see a folder called TextClassificationMNLI containing the `test.csv , train.csv ` and ` validation.csv`
 
