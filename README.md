@@ -82,6 +82,7 @@ In order to run the model with the given example datasets, please follow the com
     --validation_file textclassificationMNLI/validation.csv \
     --do_train \
     --do_predict \
+    --do_eval \
     --max_seq_length 128 \
     --per_device_train_batch_size 32 \
     --pod_type pod8 \
